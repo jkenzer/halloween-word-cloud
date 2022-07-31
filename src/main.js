@@ -1,31 +1,33 @@
 const spookyWords = require("spooky-words");
 const d3 = require("d3");
 const cloud = require("d3-cloud");
-const words = [
-  spookyWords.predicates,
-  spookyWords.objects,
-  spookyWords.teams,
-  spookyWords.collections,
-];
+const words = d3
+  .shuffle([
+    ...spookyWords.predicates,
+    ...spookyWords.objects,
+    ...spookyWords.teams,
+    ...spookyWords.collections,
+  ])
+  .slice(0, 100);
 
 console.log(Math.floor(words.length * Math.random()));
 
 const myCloud = document.getElementById("#cloud");
 
+var myColor = d3.scaleLinear().domain([10, 100]).range(["red", "orange"]);
+
 const layout = cloud()
-  .size([800, 800])
+  .size([window.innerWidth, window.innerHeight - 200])
   .words(
-    words[Math.floor(words.length * Math.random())].map(function (d) {
+    words.map(function (d) {
       return { text: d, size: 10 + Math.random() * 90 };
     })
   )
-  .padding(10)
+  .padding((d) => d.size * 0.09)
   .rotate(function () {
     return ~~(Math.random() * 2) * 90;
   })
-  .fontSize(function (d) {
-    return d.size;
-  })
+  .fontSize((d) => d.size)
   .on("end", draw);
 
 layout.start();
@@ -47,8 +49,9 @@ function draw(words) {
     .style("font-size", function (d) {
       return d.size + "px";
     })
-    .style("font-family", "Impact")
+    .style("font-family", "Creepster")
     .attr("text-anchor", "middle")
+    .attr("fill", (d) => myColor(d.size))
     .attr("transform", function (d) {
       return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
     })

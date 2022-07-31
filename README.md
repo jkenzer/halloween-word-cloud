@@ -8,5 +8,5 @@ Clone this repository and install its dependencies:
 
 ## Todo
 
-- [ ] Add spooky font
-- [ ] Add spooky colors
+- [x] Add spooky font
+- [x] Add spooky colors
