@@ -5,3 +5,8 @@ Messing around. Merging the NPM package [Spooky Words](https://www.npmjs.com/pac
 ## Getting started
 
 Clone this repository and install its dependencies:
+
+## Todo
+
+- [ ] Add spooky font
+- [ ] Add spooky colors
